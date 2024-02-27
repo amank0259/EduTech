@@ -8,7 +8,7 @@ function layout({ children }) {
             <div className='sm:w-64 sm:block hidden fixed'>
                 <SideNav />
             </div>
-            <div className='ml-64'>
+            <div className='sm:ml-64 ml-0'>
                 <Header />
                 {children}
             </div>
