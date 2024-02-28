@@ -25,7 +25,7 @@ function SideBanners() {
                             height={300}
                             width={500}
                             onClick={() => window.open(item.url)}
-                            className='rounded-xl cursor-pointer bg-sky-300'
+                            className='rounded-xl cursor-pointer'
                         />
                     </div>
                 ))}
