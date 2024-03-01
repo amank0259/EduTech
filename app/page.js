@@ -1,10 +1,25 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+"use client";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+const Home = () => {
+  const router = useRouter();
+  const { user, isLoaded } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/dashboard')
+    }
+    else {
+      isLoaded && router.push('/courses')
+    }
+  }, [user]);
   return (
     <>
-      <Button>Button</Button>
+      <UserButton afterSignOutUrl="/sign-in" />
     </>
   );
-}
+};
+
+export default Home;
