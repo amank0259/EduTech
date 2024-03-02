@@ -10,7 +10,8 @@ function CourseVideoDescription({ courseInfo }) {
         <div>
             <h2 className='text-[20px] font-semibold mb-3'>{courseInfo.name}</h2>
             {/* Video Player */}
-            <VideoPlayer videoUrl={courseInfo?.chapter[0]?.video?.url} />
+            <VideoPlayer videoUrl={courseInfo?.chapter[0]?.video?.url}
+                poster={courseInfo?.banner?.url} />
 
             {/* Description */}
             <h2 className='mt-5 text-[17px] font-semibold'>About This Course</h2>
