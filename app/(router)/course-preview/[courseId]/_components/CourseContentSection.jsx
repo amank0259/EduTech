@@ -1,7 +1,7 @@
 import { Lock, Play } from 'lucide-react';
 import React, { useState } from 'react'
 
-function CourseContentSection({ courseInfo }) {
+function CourseContentSection({ courseInfo, isUserAlreadyEnrolled }) {
     if (!courseInfo || !courseInfo.name) {
         return <div>Loading...</div>;
     }
@@ -12,9 +12,11 @@ function CourseContentSection({ courseInfo }) {
             <h2>Contents</h2>
             {courseInfo.chapter.map((item, index) => (
                 <div>
-                    <h2 className={`p-2 text-[14px] flex justify-between items-center m-2 hover:bg-gray-200 hover:text-gray-500 border rounded-sm px-4 cursor-pointer ${activeIndex == index && 'bg-primary text-white'}`}>
+                    <h2 className={`p-2 text-[14px] flex justify-between items-center m-2 hover:bg-gray-200 hover:text-gray-500 border rounded-sm px-4 cursor-pointer ${activeIndex == index && 'bg-primary text-white'}
+                    ${isUserAlreadyEnrolled && 'hover:bg-primary hover:text-white'}
+                    `}>
                         {index + 1}. {item.name}
-                        {activeIndex == index ?
+                        {activeIndex == index || isUserAlreadyEnrolled ?
                             <Play className='h-4 w-4' /> :
                             <Lock className='h-4 w-4' />
                         }
