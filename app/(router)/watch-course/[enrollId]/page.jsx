@@ -7,7 +7,11 @@ import CourseContentSection from '../../course-preview/[courseId]/_components/Co
 
 function WatchCourse({ params }) {
     const { user } = useUser();
-    const [courseInfo, setCourseInfo] = useState([])
+    const [courseInfo, setCourseInfo] = useState([]);
+    const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+    useEffect(() => {
+        console.log('here')
+    }, [])
     useEffect(() => {
         params && user && getUserEnrolledCourseDetail()
     }, [params && user])
@@ -20,19 +24,22 @@ function WatchCourse({ params }) {
         })
     }
     return courseInfo.name && (
-        <div>
-            <div className='grid grid-cols-1 md:grid-cols-3 p-5 gap-3'>
-                {/* Video Title and Description */}
-                <div className='col-span-2 bg-white p-3'>
-                    <CourseVideoDescription
-                        courseInfo={courseInfo}
-                    />
-                </div>
-                {/* Course Content */}
-                <div>
-                    <CourseContentSection courseInfo={courseInfo}
-                        isUserAlreadyEnrolled={true} />
-                </div>
+        <div className='grid grid-cols-1 md:grid-cols-3 p-5 gap-3'>
+            {/* Video Title and Description */}
+            <div className='col-span-2 bg-white p-3'>
+                <CourseVideoDescription
+                    courseInfo={courseInfo}
+                    activeChapterIndex={activeChapterIndex}
+                    watchMode={true}
+                />
+            </div>
+            {/* Course Content */}
+            <div>
+                <CourseContentSection courseInfo={courseInfo}
+                    isUserAlreadyEnrolled={true}
+                    watchMode={true}
+                    setActiveChapterIndex={(index) => setActiveChapterIndex(index)}
+                />
             </div>
         </div>
     )
