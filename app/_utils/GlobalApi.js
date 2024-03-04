@@ -128,6 +128,12 @@ const getUserEnrolledCourseDetails = async (id, email) => {
       courseId
       id
       userEmail
+      completedChapter{
+        ... on CompletedChapter{
+          id
+          chapterId
+        }
+      }
       courseList {
         author
         banner {

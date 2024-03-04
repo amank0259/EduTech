@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 function WatchCourse({ params }) {
     const { user } = useUser();
     const [courseInfo, setCourseInfo] = useState([]);
+    const [completedChapter, setCompletedChapter] = useState([]);
     const [activeChapterIndex, setActiveChapterIndex] = useState(0);
     useEffect(() => {
         console.log('here')
@@ -21,6 +22,7 @@ function WatchCourse({ params }) {
      */
     const getUserEnrolledCourseDetail = () => {
         GlobalApi.getUserEnrolledCourseDetails(params.enrollId, user.primaryEmailAddress.emailAddress).then(resp => {
+            setCompletedChapter(resp.userEnrollCourses[0].completedChapter)
             setCourseInfo(resp.userEnrollCourses[0].courseList);
         })
     }
@@ -28,11 +30,12 @@ function WatchCourse({ params }) {
     /*
     *Save Completed Chapter Id
     */
-    const onChapterComplete = () => (
+    const onChapterComplete = (chapterId) => (
         GlobalApi.markChapterCompleted(params.enrollId, chapterId).then(resp => {
             console.log(resp);
             if (resp) {
                 toast('Chapter marked as Completed!')
+                getUserEnrolledCourseDetail();
             }
         })
     )
@@ -52,6 +55,7 @@ function WatchCourse({ params }) {
                 <CourseContentSection courseInfo={courseInfo}
                     isUserAlreadyEnrolled={true}
                     watchMode={true}
+                    completedChapter={completedChapter}
                     setActiveChapterIndex={(index) => setActiveChapterIndex(index)}
                 />
             </div>
