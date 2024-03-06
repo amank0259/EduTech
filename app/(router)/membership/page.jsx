@@ -1,12 +1,17 @@
 'use client'
+import GlobalApi from '@/app/_utils/GlobalApi';
 import { Button } from '@/components/ui/button'
+import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
 import Script from 'next/script';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 function Membership() {
 
     const [subscriptionId, setSubscriptionId] = useState(null);
+    const [loader, setLoader] = useState(false);
+    const { user } = useUser();
 
     /**
      * Create Subscription Id
@@ -17,19 +22,27 @@ function Membership() {
             plan_id: planId
         })).then(resp => {
             console.log(resp.data);
+            setLoader(false);
             setSubscriptionId(resp.data.id);
-            makePayment();
         })
     }
+
+    useEffect(() => {
+        subscriptionId && makePayment();
+    }, [subscriptionId])
 
     const makePayment = () => {
         const options = {
             key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY,
             subscription_id: subscriptionId,
             name: 'EduTech',
+            // add logo here ******
             description: 'EduTech Pro Membership',
             handler: async (resp) => {
                 console.log(resp);
+                if (resp) {
+                    addNewMember(resp?.razorpay_payment_id);
+                }
 
             },
             theme: {
@@ -38,6 +51,17 @@ function Membership() {
         }
         const rzp = new window.Razorpay(options);
         rzp.open();
+    }
+
+    const addNewMember = (paymentId) => {
+        GlobalApi.addNewMember(user.primaryEmailAddress.emailAddress, paymentId).then(resp => {
+            console.log(resp);
+            if (resp) {
+                toast('Payment Successful!!');
+            }
+        }, (error) => {
+            toast('Payment Failed | Some Error happened!');
+        })
     }
 
     return (
@@ -211,10 +235,10 @@ function Membership() {
                                 <span className='text-gray-700'>Email & Instagram DM Support</span>
                             </li>
                         </ul>
-                        <Button onClick={() => createSubscription('')}
+                        <button onClick={() => createSubscription('plan_NiZkjfQgJ3BbCz')}
                             className='mt-8 block rounded-full border bg-primary px-12 py-3 text-center text-sm font-medium text-white hover:ring-1 hover:ring-indigo-600 focus:outline'>
                             Get Started
-                        </Button>
+                        </button>
                     </div>
                 </div>
             </div>

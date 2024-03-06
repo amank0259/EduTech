@@ -222,6 +222,40 @@ const getUserAllEnrolledCourseList = async (email) => {
   return result;
 }
 
+const addNewMember = async (email, paymentId) => {
+  const query = gql`
+  mutation MyMutation {
+    createMembership(
+      data: {active: false, email: "`+ email + `", paymentId: "` + paymentId + `"}
+    ) {
+      id
+    }
+      publishManyMemberships(to: PUBLISHED) {
+        count
+      }
+    }
+  }
+  `
+  const result = await request(MASTER_URL, query);
+  return result;
+}
+
+const checkForMembership = async (email) => {
+  const query = gql`
+  query MyQuery {
+    memberships(where: {email: "`+ email + `"}) {
+      email
+      id
+      paymentId
+      createdAt
+    }
+  }  
+  `
+  const result = await request(MASTER_URL, query);
+  return result;
+}
+
 export default {
-  getAllCourseList, getSideBanner, getCourseById, enrollToCourse, checkUserEnrolledToCourse, getUserEnrolledCourseDetails, markChapterCompleted, getUserAllEnrolledCourseList
+  getAllCourseList, getSideBanner, getCourseById, enrollToCourse, checkUserEnrolledToCourse, getUserEnrolledCourseDetails, markChapterCompleted, getUserAllEnrolledCourseList,
+  addNewMember, checkForMembership
 }
