@@ -8,7 +8,9 @@ function ProgressCourseItem({ course }) {
     const getTotalCompletedChapterPerc = (item) => {
         // perc = (totalCompletedChapter/totalChapter)*100
         const perc = (item.completedChapter?.length / item?.courseList?.chapter?.length) * 100;
-        return perc;
+        const roundedPercentage = perc.toFixed(0);
+
+        return roundedPercentage;
     }
     return (
         <Link href={"/course-preview/" + course?.courseList?.id}>
