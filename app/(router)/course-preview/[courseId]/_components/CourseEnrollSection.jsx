@@ -24,8 +24,8 @@ function CourseEnrollSection({ courseInfo, isUserAlreadyEnrolled }) {
             console.log(resp);
             if (resp) {
                 //Show Toast on Successfull Enroll
-                toast("User Enrolled Successfull", {
-                    description: "User Enrolled to this Course",
+                toast("Enrolled Successfull", {
+                    description: "Enrolled to this Course",
                 })
 
                 //Redirect to Watch Course 
