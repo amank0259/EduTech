@@ -3,13 +3,13 @@ import React from 'react'
 
 function CourseItem({ course }) {
     return (
-        <div className={`border rounded-xl hover:shadow-md ${course.free ? 'hover:shadow-green-300' : 'hover:shadow-orange-300'} cursor-pointer`}>
+        <div className={`border rounded-xl shadow-md hover:shadow-lg ${course.free ? 'hover:shadow-green-300' : 'hover:shadow-orange-300'} cursor-pointer`}>
             <Image src={course?.banner?.url}
                 width={500}
                 height={150}
                 className='rounded-t-xl'
             />
-            <div className='flex flex-col gap-1 p-2'>
+            <div className='flex flex-col gap-1 p-2 '>
                 <h2 className='font-medium'>{course.name}</h2>
                 {course?.chapter?.length == 0 ?
                     <div className='flex gap-2'>

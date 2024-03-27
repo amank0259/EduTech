@@ -10,19 +10,33 @@ import {
 import CourseItem from './CourseItem';
 import Link from 'next/link';
 
-
 function CourseList() {
-
     const [courseList, setCourseList] = useState([]);
+    const [filter, setFilter] = useState("all");
+
     useEffect(() => {
         getAllCourses();
     }, []);
+
     // Fetch Course List
     const getAllCourses = () => {
         GlobalApi.getAllCourseList().then(resp => {
             setCourseList(resp?.courseLists)
         })
     }
+
+    // Filter Course List based on filter value
+    const filteredCourseList = () => {
+        switch (filter) {
+            case "paid":
+                return courseList.filter(course => course.free);
+            case "free":
+                return courseList.filter(course => !course.free);
+            default:
+                return courseList;
+        }
+    }
+
     return (
         <div className='p-5 bg-white rounded-lg mt-5'>
             {/* Title and Filter */}
@@ -33,30 +47,29 @@ function CourseList() {
                         <SelectValue placeholder="Filter" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="light">All</SelectItem>
-                        <SelectItem value="dark">Paid</SelectItem>
-                        <SelectItem value="system">Free</SelectItem>
+                        <SelectItem value="all" onClick={() => setFilter("all")}>All</SelectItem>
+                        <SelectItem value="paid" onClick={() => setFilter("paid")}>Paid</SelectItem>
+                        <SelectItem value="free" onClick={() => setFilter("free")}>Free</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
             {/* Display Course List */}
             <div className='grid grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
-                {courseList?.length > 0 ? courseList.map((item, index) => (
-                    <Link href={'/course-preview/' + item.id}>
-                        <div key={index}>
+                {filteredCourseList()?.length > 0 ? filteredCourseList().map((item, index) => (
+                    <Link href={'/course-preview/' + item.id} key={index}>
+                        <div>
                             <CourseItem course={item} />
                         </div>
                     </Link>
-                ))
-                    :
+                )) : (
                     [1, 2, 3, 4, 5, 6, 7].map((item, index) => (
                         <div key={index} className='w-full h-[240px] rounded-xl m-2 bg-slate-200 animate-pulse'>
                         </div>
                     ))
-                }
+                )}
             </div>
         </div>
     )
 };
 
-export default CourseList
+export default CourseList;
