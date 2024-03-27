@@ -3,7 +3,7 @@ import React from 'react'
 
 function CourseItem({ course }) {
     return (
-        <div className='border rounded-xl hover:shadow-md hover:shadow-purple-300 cursor-pointer'>
+        <div className={`border rounded-xl hover:shadow-md ${course.free ? 'hover:shadow-green-300' : 'hover:shadow-orange-300'} cursor-pointer`}>
             <Image src={course?.banner?.url}
                 width={500}
                 height={150}
@@ -12,7 +12,7 @@ function CourseItem({ course }) {
             <div className='flex flex-col gap-1 p-2'>
                 <h2 className='font-medium'>{course.name}</h2>
                 {course?.chapter?.length == 0 ?
-                    < div className='flex gap-2'>
+                    <div className='flex gap-2'>
                         <Image src='/youtube.png'
                             width={20}
                             height={20} />
@@ -24,9 +24,13 @@ function CourseItem({ course }) {
                             height={20} />
                         <h2 className='text-[14px] text-gray-400'>Chapter</h2>
                     </div>}
-                <h2 className='text-[15px]'>{course?.free ? 'Free' : 'Paid'}</h2>
+                <span className='inline-block'>
+                    <span className={`text-[15px] px-2 py-1 rounded opacity-90 ${course.free ? 'bg-green-400' : 'bg-orange-300'}`}>
+                        {course?.free ? 'Free' : 'Paid'}
+                    </span>
+                </span>
             </div>
-        </div >
+        </div>
     )
 }
 
