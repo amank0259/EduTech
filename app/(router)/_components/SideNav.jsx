@@ -59,8 +59,8 @@ function SideNav() {
     })
     return (
         <div className='p-5 bg-white shadow-sm border h-screen'>
-            <Image src="/next.svg" alt='logo'
-                width={170} height={80} />
+            <Image src='/courses.png' alt='logo'
+                width={170} height={10} />
 
             <hr className='mt-7' />
             {/* Menu List */}
