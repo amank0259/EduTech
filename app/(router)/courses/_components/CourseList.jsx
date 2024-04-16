@@ -16,7 +16,7 @@ function CourseList() {
 
     useEffect(() => {
         getAllCourses();
-    }, []);
+    }, [filter]);
 
     // Fetch Course List
     const getAllCourses = () => {
