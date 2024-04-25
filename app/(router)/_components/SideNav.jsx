@@ -37,13 +37,13 @@ function SideNav() {
             path: '/isntructor',
             auth: true,
         },
-        {
-            id: 4,
-            name: "Store",
-            icon: LayoutGrid,
-            path: '/store',
-            auth: true,
-        },
+        // {
+        //     id: 4,
+        //     name: "Store",
+        //     icon: LayoutGrid,
+        //     path: '/store',
+        //     auth: true,
+        // },
         {
             id: 5,
             name: "Newsletter",
