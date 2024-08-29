@@ -242,7 +242,7 @@ function Membership() {
                     </div>
                 </div>
             </div>
-            <div className='flex items-center justify-center'><h1>Techboy Aman</h1></div>
+            {/* <div className='flex items-center justify-center'><h1>Techboy Aman</h1></div> */}
         </div>
     )
 }

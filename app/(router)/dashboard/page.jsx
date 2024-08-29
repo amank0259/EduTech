@@ -19,7 +19,7 @@ function Dashboard() {
      */
     const getAllUserEnrolledCourses = () => {
         GlobalApi.getUserAllEnrolledCourseList(user.primaryEmailAddress.emailAddress).then(resp => {
-            console.log(resp);
+            console.log(resp)
             setUserEnrolledCourses(resp.userEnrollCourses);
         })
     }
