@@ -24,7 +24,7 @@ function SideBanners() {
                             src={item.banner.url}
                             height={300}
                             width={500}
-                            onClick={() => window.open(item.url)}
+                            // onClick={() => window.open("")}
                             className='rounded-xl cursor-pointer'
                         />
                     </div>
